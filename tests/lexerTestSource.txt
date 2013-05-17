@@ -1,0 +1,5 @@
+hello world
+{
+	mystring{ "this is my magic string" }
+	mynumbers{ 124 -2154 0xF0FFF54AFE 0.1337e4 }
+}

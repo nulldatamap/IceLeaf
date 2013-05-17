@@ -20,8 +20,8 @@ import re
 
 class Token( object ):
 	"""
-		An object representing a terminal containing data
-		about it's literal value, source position and channel.
+	An object representing a terminal containing data
+	about it's literal value, source position and channel.
 	"""
 	def __init__( self , t , s , p , l ):
 		if t == "EOF":
@@ -48,19 +48,19 @@ class Token( object ):
 
 class LexerError( Exception ):
 	"""
-		An object representing a failure in the lexing process.
+	An object representing a failure in the lexing process.
 	"""
 	def __init__( self , pos , line ):
 		self.pos = pos;
 		self.line = line;
 		
 	def __str__( self ):
-		return "Lexing error at %d:%d"%(self.pos,self.line)
+		return "Lexing error at %d:%d"%(self.line,self.pos)
 
 class TokenType( object ):
 	"""
-		A declaration of a token type without a definition.
-		This class is only used internally for the EOF token.
+	A declaration of a token type without a definition.
+	This class is only used internally for the EOF token.
 	"""
 	def __init__( self , type , channel = 1 , hidden = False ):
 		self.type = type;
@@ -69,9 +69,9 @@ class TokenType( object ):
 
 class LexerRule( TokenType ):
 	"""
-		The lexer rule defines a syntax for a token, and what
-		type of token this will yield. A channel and visibility
-		can also be specified.
+	The lexer rule defines a pattern for a token, and what
+	type of token this will yield. A channel and visibility
+	can also be specified.
 	"""
 	def __init__( self ,typename , regex , channel = 1 , hidden = False ):
 		TokenType.__init__( self, typename , channel , hidden );
@@ -81,9 +81,9 @@ class LexerRule( TokenType ):
 
 class StateError( Exception ):
 	"""
-		A state error is manually thrown type of error
-		that should be thrown in case of an unrecoverable
-		error inside of a state function.
+	A state error is manually thrown type of error
+	that should be thrown in case of an unrecoverable
+	error inside of a state function.
 	"""
 	def __init__( self , state , rsn , pos , line ):
 		self.state = state;
@@ -96,10 +96,10 @@ class StateError( Exception ):
 
 class LexerState( object ):
 	"""
-		A lexer state is a function triggered by
-		a regex syntax. It should be used for syntaxes
-		that can't be defined by normal regex or needs
-		special lexing conditions.
+	A lexer state is a function triggered by
+	a regex pattern. It should be used for patterns
+	that can't be defined by normal regex or needs
+	special lexing conditions.
 	"""
 	def __init__( self , state , regex , statefunc ):
 		self.state = state;
@@ -108,10 +108,10 @@ class LexerState( object ):
 
 class Lexer( object ):
 	"""
-		The lexer takes a string of source code
-		and reads the given rules and returns a 
-		token list. The token list is what the 
-		parser will work off.
+	The lexer takes a string of source code
+	and reads the given rules and returns a 
+	token list. The token list is what the 
+	parser will work off.
 	"""
 	def __init__( self , *rules ):
 		self.source = "";
