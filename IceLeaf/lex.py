@@ -22,7 +22,7 @@ class Token( object ):
 	"""An object representing a terminal symbol containing data
 	about it's literal value, source position and channel.
 	"""
-	def __init__( self , type , data , pos , l ):
+	def __init__( self , type , data , pos , line ):
 		"""type  :  the type of the token ( Usually a LexerRule )
 		data  :  the data of the token
 		pos  :  the line position of the token
