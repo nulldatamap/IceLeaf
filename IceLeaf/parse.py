@@ -25,7 +25,7 @@ class ParserError(Exception):
 			return "Parsing error: reached EOF before expected!";
 		s = "Parsing error at %d:%d, got token %s "%( self.token.line , self.token.pos , str(self.token) );
 		if self.expected != None:
-			s += ", expected '%s'"%( self.expected );
+			s += ", expected %s"%( self.expected );
 		return s;
 
 class Parser(object):
