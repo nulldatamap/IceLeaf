@@ -68,3 +68,5 @@ class Parser(object):
 		else:
 			return n;
 	
+	def parse( self , tokens ):
+		return {};
