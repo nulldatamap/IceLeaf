@@ -38,12 +38,13 @@ sourceFile.close();
 
 tokens = lexer.lex( source );
 
-output = ""
-
-for token in tokens:
-	print str( token )
-	output += str( token ) + "\n";
-
-outputFile = open( "lexerTestOutput.txt" , "w" );
-outputFile.write( output );
-outputFile.close();
+if __name__ == "__main__": #Moved this code into a main wrapper since I want to import this test
+	output = ""
+	
+	for token in tokens:
+		print str( token )
+		output += str( token ) + "\n";
+	
+	outputFile = open( "lexerTestOutput.txt" , "w" );
+	outputFile.write( output );
+	outputFile.close();
