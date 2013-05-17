@@ -36,7 +36,6 @@ sourceFile = open( "lexerTestSource.txt" , "r" );
 source = sourceFile.read();
 sourceFile.close();
 
-# The lexer will always add a EOF token at the end of the list.
 tokens = lexer.lex( source );
 
 output = ""
