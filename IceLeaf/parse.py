@@ -38,46 +38,58 @@ class Parser(object):
 	def cur( self ):
 		return self.tokens[self.index]
 		
-	def lookahead( self , channel=self.channel , hidden=self.hidden ):
+	def lookahead( self , channel=None , hidden=None ):
+		channel = channel or self.channel;
+		hidden = hidden or self.hidden;
 		i = self.index+1;
 		if i >= len( self.tokens ):
-			raise ParseError( None , None , True ); #Raise a EOF exception
+			raise ParserError( None , None , True ); #Raise a EOF exception
 		while self.tokens[i].channel != channel or self.tokens[i].hidden != hidden:
 			i += 1;
 			if i >= len( self.tokens ):
-				raise ParseError( None , None , True ); #Raise a EOF exception
+				raise ParserError( None , None , True ); #Raise a EOF exception
 		return self.tokens[i];
 	
-	def matches( self , ttype , channel=self.channel , hidden=self.hidden  ):
+	def matches( self , ttype , channel=None , hidden=None  ):
+		channel = channel or self.channel;
+		hidden = hidden or self.hidden;
 		c = self.cur();
 		return c.type == ttype and c.channel == channel and c.hidden == hidden;
 		
-	def lookaheadmatches( self , ttype , channel=self.channel , hidden=self.hidden ):
+	def lookaheadmatches( self , ttype , channel=None , hidden=None ):
+		channel = channel or self.channel;
+		hidden = hidden or self.hidden;
 		return self.lookahead( channel , hidden ).type == ttype;
 	
-	def next( self , channel=self.channel , hidden=self.hidden ):
+	def next( self , channel=None , hidden=None ):
+		channel = channel or self.channel;
+		hidden = hidden or self.hidden;
 		r = self.tokens[ self.index ]
 		i = self.index+1;
 		if i >= len( self.tokens ):
-			raise ParseError( None , None , True ); #Raise a EOF exception
+			raise ParserError( None , None , True ); #Raise a EOF exception
 		while self.tokens[i].channel != channel or self.tokens[i].hidden != hidden:
 			i += 1;
 			if i >= len( self.tokens ):
-				raise ParseError( None , None , True ); #Raise a EOF exception
+				raise ParserError( None , None , True ); #Raise a EOF exception
 		self.index = i;
 		return r;
 	
 	# DO NOTE:
 	# This method does not apply the given channel and hidden parameters
 	# to the next() call, so set the parser variables for that instead
-	def nextif( self , ttype , channel=self.channel , hidden=self.hidden ):
+	def nextif( self , ttype , channel=None , hidden=None ):
+		channel = channel or self.channel;
+		hidden = hidden or self.hidden;
 		r = False;
 		if self.matches( ttype , channel , hidden ):
 			r = self.cur();
 			self.next();
 		return r;
 	
-	def expect( self , ttype , channel=self.channel , hidden=self.hidden ):
+	def expect( self , ttype , channel=None , hidden=None ):
+		channel = channel or self.channel;
+		hidden = hidden or self.hidden;
 		n = self.nextif( ttype , channel , hidden )
 		if not n:
 			raise ParserError( self.cur() , ttype );
@@ -85,4 +97,5 @@ class Parser(object):
 			return n;
 	
 	def parse( self , tokens ):
-		return {};
+		self.tokens = tokens;
+		self.index = 0;
