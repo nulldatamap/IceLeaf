@@ -19,7 +19,7 @@ import re
 
 
 class Token( object ):
-	"""An object representing a terminal containing data
+	"""An object representing a terminal symbol containing data
 	about it's literal value, source position and channel.
 	"""
 	def __init__( self , type , data , pos , l ):
@@ -181,6 +181,7 @@ class Lexer( object ):
 		"""Lexes the source string into a list of tokens.
 		The last token will always be a EOF token.
 		Lexer errors from nextToken will bubble up.
+		source  :  the source string to lex
 		"""
 		self.source = source;
 		self.tokens = []
