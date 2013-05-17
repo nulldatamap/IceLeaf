@@ -1,4 +1,4 @@
-IceLeaf
+![IceLeaf](/iceleaf.png)IceLeaf
 =======
 **IceLeaf** is a pure python library for lexing, parsing and AST handling.
 It is not written to be faster or more shiny than libraries like [PLY](http://www.dabeaz.com/ply/), it focuses on being easy to learn and use.
