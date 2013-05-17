@@ -8,7 +8,7 @@ features:
 **IceLeaf** will support some basic, but useful features like:
 
   * Regex based lexeing. You will be able to define lexer rules, specifying the token type, token channel and such.
-  * A simple and extenable parsing engine, for custom parsers ( using token reading functions )
+  * A simple and extendable parsing engine, for custom parsers ( using token reading functions )
   * A [context free grammar](http://en.wikipedia.org/wiki/Context_free_grammar) based parser.
   * (Hopefully) A file format for writing grammars even faster ( It's a parser parser )
   * Useful functions for treating `dict`s as [ASTs](http://en.wikipedia.org/wiki/Abstract_syntax_tree). ( Maybe even implement a real AST class )
