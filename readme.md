@@ -15,7 +15,8 @@ features:
  
 examples:
 ---------
-Nothing yet here
+I will put some code examples in here, but until then look in the ```tests``` folder,
+it should be fairly documented.
 
 Credits and special thanks:
 ---------------------------
