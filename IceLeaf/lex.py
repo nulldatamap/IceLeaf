@@ -14,7 +14,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 #
 
-
 import re
 
 
@@ -109,7 +108,7 @@ class StateError( Exception ):
 		self.line = line;
 
 	def __str__( self ):
-		return "State error \"%s\", in state %s at %d:%d"%(self.state,self.reason,self.line,self.pos);
+		return "State error \"%s\", in state %s at %d:%d"%(self.reason,self.state,self.line,self.pos);
 
 class LexerState( object ):
 	"""A lexer state is a function triggered by
