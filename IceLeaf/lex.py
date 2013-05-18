@@ -182,6 +182,10 @@ class Lexer( object ):
 		Lexer errors from nextToken will bubble up.
 		source  :  the source string to lex
 		"""
+		self.index = 0;
+		self.pos = 1;
+		self.line = 1;
+		self.state = None;
 		self.source = source;
 		self.tokens = []
 		s = self.nextToken();
