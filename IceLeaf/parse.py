@@ -162,7 +162,7 @@ class Parser(object):
 			v = self.cur();
 			if v.channel == channel and v.hidden == hidden:
 				break;
-			self.index++;
+			self.index += 1;
 			if self.index == len( self.tokens ):
 				raise ParserError( None , None , True ); #Raise a EOF exception
 	
