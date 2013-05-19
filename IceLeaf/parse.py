@@ -137,17 +137,19 @@ class Parser(object):
 			self.next();
 		return r;
 	
-	def expect( self , ttype , channel=None , hidden=None ):
+	def expect( self , ttype , errorexp=None , channel=None , hidden=None ):
 		"""Returns current token if the specified type matches, and calls next(  ) else raises a ParsingError
 		ttype  :  the type of the token to check for
+		errorexp  :  the value displayed in the error message ( default ttype )
 		channel  :  the specified channel to handle tokens in ( default self.channel )
 		hidden  :  should read hidden tokens ( default self.hidden )
 		"""
 		channel = channel or self.channel;
 		hidden = hidden or self.hidden;
+		errorexp = errorexp or ttype;
 		n = self.nextif( ttype , channel , hidden )
 		if not n:
-			raise ParserError( self.cur() , ttype );
+			raise ParserError( self.cur() , errorexp );
 		else:
 			return n;
 			
