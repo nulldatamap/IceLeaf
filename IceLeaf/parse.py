@@ -43,6 +43,9 @@ class Parser(object):
 		self.index = 0;
 		self.channel = 1;
 		self.hidden = False;
+		self.markIndex = 0;
+		self.markChannel = 1;
+		self.markHidden = False;
 	
 	def cur( self ):
 		"""Returns the current token.
@@ -168,6 +171,21 @@ class Parser(object):
 			if self.index == len( self.tokens ):
 				raise ParserError( None , None , True ); #Raise a EOF exception
 	
+	def mark( self ):
+		"""Marks the current tokens index so
+		it can be returned to with restore()
+		"""
+		self.markIndex = self.index;
+		self.markChannel = self.channel;
+		self.markHidden = self.hidden;
+		
+	def restore( self ):
+		"""Returns to last marked token index ( marked with mark() )
+		"""
+		self.index = self.markIndex;
+		self.channel = self.markChannel;
+		self.hidden = self.markHidden;
+	
 	def parse( self , tokens ):
 		"""Parses a list of tokens and returns a AST ( not required though, could return any value )
 		This method should be overridden and called from the child class.
@@ -175,4 +193,7 @@ class Parser(object):
 		"""
 		self.tokens = tokens;
 		self.index = 0;
+		self.markIndex = 0;
+		self.markChannel = 1;
+		self.markHidden = False;
 	
