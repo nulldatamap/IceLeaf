@@ -121,7 +121,7 @@ class LexerState( object ):
 		statefunc( lexer , statename )
 		"""
 		self.state = state;
-		self.regex = regex;
+		self.regex = re.compile( regex );
 		self.func = statefunc;
 
 class Lexer( object ):
