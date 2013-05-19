@@ -87,9 +87,7 @@ class LexerRule( TokenType ):
 		hidden  :  the token's visibility ( default True )
 		"""
 		TokenType.__init__( self, typename , channel , hidden );
-		regex = regex.replace( "\\(" ,    "-_-!!^OPEN_PAREN^!!-_-" ); #Replace escaped parentheses with something very unlikely to already exist. 
-		regex = regex.replace( "(" , "(?:" );
-		self.regex = regex.replace( "-_-!!^OPEN_PAREN^!!-_-" , "\\(" ); #Don't worry, it's safe now, you can come back
+		self.regex = re.compile( regex );
 
 class StateError( Exception ):
 	"""A state error is manually thrown type of error
@@ -143,12 +141,7 @@ class Lexer( object ):
 		self.index = 0;
 		self.pos = 1;
 		self.line = 1;
-		for i in range( len(rules) ):
-			if i != 0:
-				self.rulere += "|"
-			self.rulere += "(" + rules[i].regex + ")"
-			self.rules.append( rules[i] )
-		self.rulere = re.compile( self.rulere );
+		self.rules = rules;
 	
 	def nextToken( self ):
 		"""Returns the next valid token, or None if EOF has been reached.
@@ -156,25 +149,25 @@ class Lexer( object ):
 		"""
 		if self.index == len( self.source ):
 			return None;
-		m = self.rulere.match( self.source[self.index:] )
-		if m == None:
-			print self.source[self.index:]
-			raise LexerError( self.pos , self.line );
-		i = 0;
-		gs = m.groups()
-		while gs[i] == None:
-			i+=1;
-		if isinstance ( self.rules[i] , LexerState ):
-			self.state = self.rules[i];
-			return Token( LexerRule("IGNORE",""), 0 , 0 , 0 );
-		if self.rules[i].type == "NEWLINE":
-			self.line+=1;
-			self.pos = 1;
-			self.index += 1;
-		else:
-			self.pos += len( gs[i] )
-			self.index += len( gs[i] )
-		return Token( self.rules[i] , gs[i] , self.pos - len( gs[i] ) , self.line );
+		for i in range( len( self.rules ) ):
+			m = self.rules[i].regex.match( self.source[self.index:] )
+			if m == None:
+				if i == len( self.rules ) - 1:
+					print self.source[self.index:]
+					raise LexerError( self.pos , self.line );
+				continue;
+			if isinstance ( self.rules[i] , LexerState ):
+				self.state = self.rules[i];
+				return Token( LexerRule("IGNORE",""), 0 , 0 , 0 );
+			if self.rules[i].type == "NEWLINE":
+				self.line+=1;
+				self.pos = 1;
+				self.index += 1;
+			else:
+				self.pos += len( m.group(0) )
+				self.index += len( m.group(0) )
+			return Token( self.rules[i] , m.group(0) , self.pos - len( m.group(0) ) , self.line );
+			
 
 	def lex( self , source ):
 		"""Lexes the source string into a list of tokens.
