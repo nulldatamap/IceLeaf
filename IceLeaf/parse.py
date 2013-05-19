@@ -150,6 +150,21 @@ class Parser(object):
 			raise ParserError( self.cur() , ttype );
 		else:
 			return n;
+			
+	def skipTokens( self , channel=None , hidden=None ):
+		"""Skips all tokens without the given settings
+		channel  :  the channel that shouldn't be skipped past
+		hidden  :  the visibility that shouldn't be skipped past
+		"""
+		channel = channel or self.channel;
+		hidden = hidden or self.hidden;
+		while True:
+			v = self.cur();
+			if v.channel == channel and v.hidden == hidden:
+				break;
+			self.index++;
+			if self.index == len( self.tokens ):
+				raise ParserError( None , None , True ); #Raise a EOF exception
 	
 	def parse( self , tokens ):
 		"""Parses a list of tokens and returns a AST ( not required though, could return any value )
