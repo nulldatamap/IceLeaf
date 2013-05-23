@@ -49,6 +49,13 @@ class ASTObject(object):
 		dstr = "{ ";
 		d = self._data;
 		for k in d.keys():
-			dstr += "%s: %s , "%( k , str(d[k]) )
+			if type( d[k] ) == list:
+				dd = "[ ";
+				for item in d[k]:
+					dd += "%s , "%(str(item));
+				dd += "]"
+			else:
+				dd = str(d[k]);
+			dstr += "%s: %s , "%( k , dd )
 		dstr += "}";
 		return "ASTObject.%s%s"%( self.type , dstr );
