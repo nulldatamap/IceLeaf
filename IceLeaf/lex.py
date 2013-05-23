@@ -164,7 +164,12 @@ class Lexer( object ):
 				self.pos = 1;
 				self.index += 1;
 			else:
-				self.pos += len( m.group(0) )
+				c = m.group(0).count("\n");
+				self.line += c
+				if c == 0:
+					self.pos += len( m.group(0) );
+				else:
+					self.pos = len( m.group(0).split("\n")[-1] )
 				self.index += len( m.group(0) )
 			return Token( self.rules[i] , m.group(0) , self.pos - len( m.group(0) ) , self.line );
 			
