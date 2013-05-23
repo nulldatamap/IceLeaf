@@ -46,4 +46,9 @@ class ASTObject(object):
 			self.__dict__["type"] = value;
 	
 	def __str__( self ):
-		return "ASTObject.%s%s"%( self.type , self._data );
+		dstr = "{ ";
+		d = self._data;
+		for k in d.keys():
+			dstr += "%s: %s , "%( k , str(d[k]) )
+		dstr += "}";
+		return "ASTObject.%s%s"%( self.type , dstr );
