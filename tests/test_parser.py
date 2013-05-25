@@ -9,25 +9,25 @@ class TestParser(Parser):
 	
 	def parse( self , tokens ): 
 		Parser.parse( self , tokens ); #Call the superclass
-		ast = { "head":[] , "body":[] }
-		ast["head"].append( self.expect( "IDENT" ).data ); #Expect an IDENT token, and fail otherwise
+		ast = ASTObject( "program" , head= [] , body= [] );
+		ast.head.append( self.expect( "IDENT" ).data ); #Expect an IDENT token, and fail otherwise
 		while self.matches("IDENT"): #While the current token is still a IDENT
-			ast["head"].append( self.next().data ); #Add it to our header list
+			ast.head.append( self.next().data ); #Add it to our header list
 		self.expect( "OBRKT" ); #Body start
-		
+		print str( self.lookahead( 2 ) );
 		while not self.matches( "CBRKT" ): #As long as we don't match the closing bracket
-			ast["body"].append( self.entry(  ) ); #Parse a body entry
+			ast.body.append( self.entry(  ) ); #Parse a body entry
 		
 		self.expect( "CBRKT" ); #Body end
 		self.matches( "EOF" ); #And that should be the end of the file
 		return ast;
 	
 	def entry( self ):
-		ast = { "name":"" , "values":[] };
-		ast["name"] = self.expect( "IDENT" ).data;
+		ast = ASTObject( "entry" , name= "" , values= [] );
+		ast.name = self.expect( "IDENT" ).data;
 		self.expect( "OBRKT" );
 		while not self.matches( "CBRKT" ):
-			ast["values"].append( self.literal() );
+			ast.values.append( self.literal() );
 		self.expect( "CBRKT" )
 		return ast;
 	
@@ -73,11 +73,11 @@ ast = parser.parse( tokens );
 if __name__ == "__main__":
 	tostring = "";
 	
-	tostring += str( ast["head"] );
+	tostring += str( ast.head );
 	tostring += "\n{\n";
-	for entry in ast["body"]:
-		tostring += "    " + entry["name"] + " "
-		tostring += str( entry["values"] ) + "\n";
+	for entry in ast.body:
+		tostring += "    " + entry.name + " "
+		tostring += str( entry.values ) + "\n";
 	tostring += "}\n"
 	
 	print tostring;

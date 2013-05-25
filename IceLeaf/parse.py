@@ -43,30 +43,34 @@ class Parser(object):
 		self.index = 0;
 		self.channel = 1;
 		self.hidden = False;
-		self.markIndex = 0;
-		self.markChannel = 1;
-		self.markHidden = False;
+		self.marks = [ 0 ];
 	
 	def cur( self ):
 		"""Returns the current token.
 		"""
 		return self.tokens[self.index]
 		
-	def lookahead( self , channel=None , hidden=None ):
+	def lookahead( self , amount=1 , channel=None , hidden=None ):
 		"""Returns the next token without moving to it.
+		amount  :  the specified amount of tokens to look ahead ( defaut 1 )
 		channel  :  the specified channel to handle tokens in ( default self.channel )
 		hidden  :  should read hidden tokens ( default self.hidden )
 		"""
 		channel = channel or self.channel;
 		hidden = hidden or self.hidden;
-		i = self.index+1;
-		if i >= len( self.tokens ):
+		if self.index+amount >= len( self.tokens ):
 			raise ParserError( None , None , True ); #Raise a EOF exception
-		while self.tokens[i].channel != channel or self.tokens[i].hidden != hidden:
-			i += 1;
-			if i >= len( self.tokens ):
+		tokenoffset = 0;
+		tokenslookedahead = 0;
+		while tokenslookedahead != amount:
+			tokenoffset += 1;
+			if self.index + tokenoffset >= len( self.tokens ):
 				raise ParserError( None , None , True ); #Raise a EOF exception
-		return self.tokens[i];
+			testtoken = self.tokens[ self.index + tokenoffset ];
+			if testtoken.channel == channel and testtoken.hidden == hidden:
+				tokenslookedahead += 1;
+				if tokenslookedahead == amount:
+					return self.tokens[ self.index + tokenoffset ];
 	
 	def matches( self , ttype , channel=None , hidden=None  ):
 		"""Returns if the current token matches the specified type
@@ -79,15 +83,16 @@ class Parser(object):
 		c = self.cur();
 		return c.type == ttype and c.channel == channel and c.hidden == hidden;
 		
-	def lookaheadmatches( self , ttype , channel=None , hidden=None ):
+	def lookaheadmatches( self , ttype , amount = 1 , channel=None , hidden=None ):
 		"""The same as matches( lookahead(  ) )
 		ttype  :  the type of the token to check for
+		amount  :  the specified amount of tokens to look ahead ( defaut 1 )
 		channel  :  the specified channel to handle tokens in ( default self.channel )
 		hidden  :  should read hidden tokens ( default self.hidden )
 		"""
 		channel = channel or self.channel;
 		hidden = hidden or self.hidden;
-		return self.lookahead( channel , hidden ).type == ttype;
+		return self.lookahead( amount , channel , hidden ).type == ttype;
 	
 	def hasNext( self , channel=None , hidden=None ):
 		"""Returns if there is another token to be read.
@@ -175,16 +180,17 @@ class Parser(object):
 		"""Marks the current tokens index so
 		it can be returned to with restore()
 		"""
-		self.markIndex = self.index;
-		self.markChannel = self.channel;
-		self.markHidden = self.hidden;
+		self.marks.append( ( self.index , self.channel , self.hidden ) );
 		
 	def restore( self ):
 		"""Returns to last marked token index ( marked with mark() )
 		"""
-		self.index = self.markIndex;
-		self.channel = self.markChannel;
-		self.hidden = self.markHidden;
+		t = self.marks[-1];
+		if len( self.marks ) != 1:
+			self.marks.pop();
+		self.index = t[0];
+		self.channel = t[1];
+		self.hidden = t[2];
 	
 	def parse( self , tokens ):
 		"""Parses a list of tokens and returns a AST ( not required though, could return any value )
@@ -193,7 +199,5 @@ class Parser(object):
 		"""
 		self.tokens = tokens;
 		self.index = 0;
-		self.markIndex = 0;
-		self.markChannel = 1;
-		self.markHidden = False;
+		self.marks = [ 0 ]
 	

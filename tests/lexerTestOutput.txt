@@ -3,18 +3,26 @@ Token.IDENT{ 'world' at 1:7 }
 Token.NEWLINE{ '\n' at 2:0 in channel 0 }
 Token.OBRKT{ '{' at 2:1 }
 Token.NEWLINE{ '\n' at 3:0 in channel 0 }
-Token.IDENT{ 'mystring' at 3:2 }
-Token.OBRKT{ '{' at 3:10 }
-Token.STRING{ '"this is my magic string"' at 3:12 }
-Token.CBRKT{ '}' at 3:38 }
 Token.NEWLINE{ '\n' at 4:0 in channel 0 }
-Token.IDENT{ 'mynumbers' at 4:2 }
-Token.OBRKT{ '{' at 4:11 }
-Token.INT{ '124' at 4:13 }
-Token.INT{ '-2154' at 4:17 }
-Token.HEX{ '0xF0FFF54AFE' at 4:23 }
-Token.FLOAT{ '0.1337e4' at 4:36 }
-Token.CBRKT{ '}' at 4:45 }
 Token.NEWLINE{ '\n' at 5:0 in channel 0 }
-Token.CBRKT{ '}' at 5:1 }
-Token.EOF{ '' at 5:2 }
+Token.NEWLINE{ '\n' at 6:0 in channel 0 }
+Token.NEWLINE{ '\n' at 7:0 in channel 0 }
+Token.NEWLINE{ '\n' at 8:0 in channel 0 }
+Token.NEWLINE{ '\n' at 9:0 in channel 0 }
+Token.IDENT{ 'mystring' at 9:2 }
+Token.NEWLINE{ '\n' at 10:0 in channel 0 }
+Token.OBRKT{ '{' at 10:2 }
+Token.NEWLINE{ '\n' at 11:0 in channel 0 }
+Token.STRING{ '"this is my magic string"' at 11:2 }
+Token.CBRKT{ '}' at 11:28 }
+Token.NEWLINE{ '\n' at 12:0 in channel 0 }
+Token.IDENT{ 'mynumbers' at 12:2 }
+Token.OBRKT{ '{' at 12:11 }
+Token.INT{ '124' at 12:13 }
+Token.INT{ '-2154' at 12:17 }
+Token.HEX{ '0xF0FFF54AFE' at 12:23 }
+Token.FLOAT{ '0.1337e4' at 12:36 }
+Token.CBRKT{ '}' at 12:45 }
+Token.NEWLINE{ '\n' at 13:0 in channel 0 }
+Token.CBRKT{ '}' at 13:1 }
+Token.EOF{ '' at 13:2 }
