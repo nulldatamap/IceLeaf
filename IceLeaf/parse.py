@@ -191,6 +191,12 @@ class Parser(object):
 		self.index = t[0];
 		self.channel = t[1];
 		self.hidden = t[2];
+		
+	def popmark( self ):
+		"""Pops the last mark from the stack without applying it.
+		"""
+		if len( self.marks ) != 1:
+			self.marks.pop();
 	
 	def parse( self , tokens ):
 		"""Parses a list of tokens and returns a AST ( not required though, could return any value )
