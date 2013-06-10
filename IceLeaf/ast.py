@@ -29,6 +29,9 @@ class ASTObject(object):
 		self.__dict__["type"] = type;
 		self.__dict__["data"] = data;
 	
+	def haskey( self , key ):
+		return self.__dict__["data"].has_key( key );
+	
 	def __getattr__( self , name ):
 		if name == "type":
 			return self.__dict__["type"];
@@ -44,6 +47,7 @@ class ASTObject(object):
 			self.__dict__["data"] = value;
 		elif name == "type":
 			self.__dict__["type"] = value;
+			
 	
 	def __str__( self ):
 		dstr = "{ ";
