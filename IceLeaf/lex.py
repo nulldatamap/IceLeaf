@@ -131,7 +131,7 @@ class Lexer( object ):
 	parser will work off.
 	"""
 	def __init__( self , *rules ):
-		"""*rules  :  a unpacked list of lexer rules and states
+		"""*rules  :  an unpacked list of lexer rules and states
 		"""
 		self.source = "";
 		self.rules = [];
