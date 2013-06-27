@@ -143,7 +143,7 @@ class Lexer( object ):
 		self.line = 1;
 		self.rules = rules;
 	
-	def nextToken( self ):
+	def nexttoken( self ):
 		"""Returns the next valid token, or None if EOF has been reached.
 		It raises a lexing error if no lexer rule mathces.
 		"""
@@ -177,7 +177,7 @@ class Lexer( object ):
 	def lex( self , source ):
 		"""Lexes the source string into a list of tokens.
 		The last token will always be a EOF token.
-		Lexer errors from nextToken will bubble up.
+		Lexer errors from nexttoken will bubble up.
 		source  :  the source string to lex
 		"""
 		self.index = 0;
@@ -186,11 +186,11 @@ class Lexer( object ):
 		self.state = None;
 		self.source = source;
 		self.tokens = []
-		s = self.nextToken();
+		s = self.nexttoken();
 		while s != None:
 			if s.type != "IGNORE":
 				self.tokens.append( s );
-			s = self.nextToken();
+			s = self.nexttoken();
 			if self.state != None:
 				self.state.func( self , self.state.state );
 				self.state = None;
