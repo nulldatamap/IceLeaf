@@ -94,7 +94,7 @@ class Parser(object):
 		hidden = hidden or self.hidden;
 		return self.lookahead( amount , channel , hidden ).type == ttype;
 	
-	def hasNext( self , channel=None , hidden=None ):
+	def hasnext( self , channel=None , hidden=None ):
 		"""Returns if there is another token to be read.
 		channel  :  the specified channel to handle tokens in ( default self.channel )
 		hidden  :  should read hidden tokens ( default self.hidden )
@@ -161,7 +161,7 @@ class Parser(object):
 		else:
 			return n;
 			
-	def skipTokens( self , channel=None , hidden=None ):
+	def skiptokens( self , channel=None , hidden=None ):
 		"""Skips all tokens without the given settings
 		channel  :  the channel that shouldn't be skipped past
 		hidden  :  the visibility that shouldn't be skipped past
