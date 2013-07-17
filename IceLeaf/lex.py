@@ -1,15 +1,15 @@
 # Copyright (C) 2013  Marco Aslak Persson
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 #
@@ -49,6 +49,9 @@ class Token( object ):
 		s += " }";
 		return s;
 
+	def __repr__( self ):
+		return str( self );
+
 class LexerError( Exception ):
 	"""An object representing a failure in the lexing process.
 	"""
@@ -58,7 +61,7 @@ class LexerError( Exception ):
 		"""
 		self.pos = pos;
 		self.line = line;
-		
+
 	def __str__( self ):
 		return "Lexing error at %d:%d"%(self.line,self.pos)
 
@@ -126,8 +129,8 @@ class LexerState( object ):
 
 class Lexer( object ):
 	"""The lexer takes a string of source code
-	and reads the given rules and returns a 
-	token list. The token list is what the 
+	and reads the given rules and returns a
+	token list. The token list is what the
 	parser will work off.
 	"""
 	def __init__( self , *rules ):
@@ -142,7 +145,7 @@ class Lexer( object ):
 		self.pos = 1;
 		self.line = 1;
 		self.rules = rules;
-	
+
 	def nexttoken( self ):
 		"""Returns the next valid token, or None if EOF has been reached.
 		It raises a lexing error if no lexer rule mathces.
@@ -172,7 +175,7 @@ class Lexer( object ):
 					self.pos = len( m.group(0).split("\n")[-1] )
 				self.index += len( m.group(0) )
 			return Token( self.rules[i] , m.group(0) , self.pos - len( m.group(0) ) , self.line );
-			
+
 
 	def lex( self , source ):
 		"""Lexes the source string into a list of tokens.
